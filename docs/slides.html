@@ -77,8 +77,6 @@
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
@@ -167,9 +165,9 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="MLMC: Machine Learning Monte Carlo">
-<meta property="og:description" content="MLMC: Machine Learning Monte Carlo for Lattice Gauge Theory">
-<meta property="og:image" content="./assets/thumbnail.png">
+  <link rel="shortcut icon" href="assets/mitiq.ico">
+<meta property="og:title" content="Quantum Error Mitigation: from theory to practice">
+<meta property="og:description" content="Presentation on Quantum Error Mitigation given at the QuSoft seminar.">
 </head>
 <body class="quarto-dark">
   <div class="reveal">
@@ -203,8 +201,8 @@
 <p><span style="color:#939393; font-size:1.5em; font-weight: bold;">Quantum Error Mitigation</span><br>
 <span style="color:#777777; font-size:1.2em; font-weight: bold;">from theory to practice</span><br>
 <span style="padding-bottom: 0.5rem;"><br>&nbsp;</span><br>
-<a href="https://nates.place"><i class="fa-solid fa-home" aria-label="home"></i></a> nate stemen</p>
-<p><span style="border-bottom: 0.5px solid #00ccff;"><a href="https://github.com/unitaryfund/mitiq"><i class="fa-brands fa-github" aria-label="github"></i> <code>unitaryfund/mitiq</code></a></span></p>
+<a href="https://nates.place"><i class="fa-solid fa-home" aria-label="home"></i> nate stemen</a></p>
+<p><a href="https://github.com/unitaryfund/mitiq"><i class="fa-brands fa-github" aria-label="github"></i> <code>unitaryfund/mitiq</code></a></p>
 <p><span class="dim-text" style="&quot;text-align:left;'">2025-02-07 @ <a href="https://qusoft.org/">QuSoft</a> Seminar</span></p>
 </div>
 </section>
@@ -427,7 +425,6 @@
 <div class="columns">
 <div class="column fragment" style="width:50%;">
 <p><strong><span class="pink-text">Classical</span> Noisy Simulation Algorithms</strong></p>
-<!-- <img src="assets/papers/noisy-rcs.png" style="border-radius: 8px; box-shadow: 0 0 10px rgba(255, 103, 255, 0.5), 0 0 20px rgba(255, 103, 255, 0.3), 0 0 30px rgba(255, 103, 255, 0.2)" /> -->
 <div class="fragment">
 <p><img src="assets/papers/noisy-rcs.png" style="border-radius: 8px;"> <img src="assets/papers/classical-qcs.png" style="border-radius: 8px;"> <img src="assets/papers/pauli-prop.png" style="border-radius: 8px;"></p>
 </div>
@@ -761,7 +758,7 @@ Zimborás, Zoltán, Bálint Koczor, Zoë Holmes, Elsi-Mari Borrelli, András Gil
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="https://raw.githubusercontent.com/unitaryfund/unitary.foundation/refs/heads/main/src/assets/svg/logo.svg" class="slide-logo"></p>
 <div class="footer footer-default">
-
+<p><i class="fa-brands fa-github" aria-label="github"></i> <a href="https://natestemen.github.io/qem-qusoft/">natestemen.github.io/qem-qusoft</a></p>
 </div>
 </div></div>
 
@@ -772,7 +769,6 @@ Zimborás, Zoltán, Bálint Koczor, Zoë Holmes, Elsi-Mari Borrelli, András Gil
   <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -786,15 +782,14 @@ Zimborás, Zoltán, Bálint Koczor, Zoë Holmes, Elsi-Mari Borrelli, András Gil
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': false,
+'controlsAuto': true,
 'previewLinksAuto': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -802,7 +797,7 @@ Zimborás, Zoltán, Bálint Koczor, Zoë Holmes, Elsi-Mari Borrelli, András Gil
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
-        controlsTutorial: true,
+        controlsTutorial: false,
 
         // Determines where controls appear, "edges" or "bottom-right"
         controlsLayout: 'edges',
@@ -844,7 +839,7 @@ Zimborás, Zoltán, Bálint Koczor, Zoë Holmes, Elsi-Mari Borrelli, András Gil
         disableLayout: false,
 
         // Vertical centering of slides
-        center: true,
+        center: false,
 
         // Enables touch navigation on devices with touch input
         touch: true,
@@ -917,7 +912,7 @@ Zimborás, Zoltán, Bálint Koczor, Zoë Holmes, Elsi-Mari Borrelli, András Gil
         hideCursorTime: 5000,
 
         // Opens links in an iframe preview overlay
-        previewLinks: true,
+        previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
         transition: 'none',
@@ -948,7 +943,7 @@ Zimborás, Zoltán, Bálint Koczor, Zoë Holmes, Elsi-Mari Borrelli, András Gil
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
 
           RevealNotes,
           RevealSearch,

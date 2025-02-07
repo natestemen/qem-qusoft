@@ -6,13 +6,14 @@ date: 2025-02-07
 date-modified: last-modified
 bibliography: references.bib
 appendix-cite-as: display
-# favicon: "./assets/favicon.svg"
-image: "assets/thumbnail.png"
-# footer: "{{< fa brands github >}} [saforem2.github.io/lattice23](https://saforem2.github.io/lattice23)"
+include-in-header:
+  - text: |
+      <link rel="shortcut icon" href="assets/mitiq.ico" />
+footer: "{{< fa brands github >}} [natestemen.github.io/qem-qusoft](https://natestemen.github.io/qem-qusoft/)"
 open-graph:
-  image: "./assets/thumbnail.png"
-  title: "MLMC: Machine Learning Monte Carlo"
-  description: "MLMC: Machine Learning Monte Carlo for Lattice Gauge Theory"
+  title: "Quantum Error Mitigation: from theory to practice"
+  description: "Presentation on Quantum Error Mitigation given at the QuSoft seminar."
+  type: "website"
 author:
   name: nate stemen
   url: https://nates.place
@@ -20,55 +21,28 @@ author:
   affiliation: Unitary Foundation
   affiliation-url: https://unitary.foundation
 citation:
-   author: nate stemen
-   type: speech
-  #  genre: "Presentation at the 2023 International Symposium on Lattice Field Theory"
-  #  container-title: https://indico.fnal.gov/event/57249/contributions/271305/
-  #  title: "MLMC: Machine Learning Monte Carlo for Lattice Gauge Theory"
-  #  url: https://saforem2.github.io/lattice23
-  #  abstract: | 
-  #    We present a trainable framework for efficiently generating gauge
-  #    configurations, and discuss ongoing work in this direction. In particular, we
-  #    consider the problem of sampling configurations from a 4D 𝑆𝑈(3) lattice gauge
-  #    theory, and consider a generalized leapfrog integrator in the molecular
-  #    dynamics update that can be trained to improve sampling efficiency.
+  author: nate stemen
+  title: "Quantum Error Mitigation: from theory to practice"
+  type: speech
+  abstract: |
+    Quantum error mitigation (QEM) provides a set of techniques to reduce the impact of noise in near-term quantum computers without the large qubit overhead of quantum error correction. In this talk, I will introduce the core ideas behind QEM and detail the differences from error correction. I will discuss theoretical results that constrain the effective use of QEM techniques in practice, considering both sampling requirements and the role of new classical algorithms for noisy circuit simulation. From there, we will explore the future of QEM as hardware improves and error-corrected devices come online. Along the way, I will cover three QEM techniques—zero-noise extrapolation (ZNE), probabilistic error cancellation (PEC), and virtual distillation—highlighting their trade-offs and practical applications.
 callout-style: simple
 format:
   revealjs:
     output-file: "slides.html"
-    title-block-style: none
     slide-number: c
-    title-slide-style: default
-    chalkboard:
-      buttons: false
     auto-animate: true
-    reference-location: section
     touch: true
     pause: false
-    footnotes-hover: true
-    citations-hover: true
-    preview-links: true
-    controls-tutorial: true
-    controls: false
     logo: https://raw.githubusercontent.com/unitaryfund/unitary.foundation/refs/heads/main/src/assets/svg/logo.svg
     history: false
     theme: [css/dark.scss]
-    callot-style: simple
     css: [css/default.css, css/callouts.css]
     self-contained: false
     embed-resources: false
     self-contained-math: false
-    center: true
     highlight-style: "atom-one"
-    default-image-extension: svg
-    code-line-numbers: true
-    code-overflow: scroll
     html-math-method: katex
-    fig-align: center
-    mermaid:
-      theme: neutral
-  # gfm:
-  #   output-file: "lattice23.md"
 ---
 
 # {.title-slide .centeredslide}
@@ -77,9 +51,9 @@ format:
 <span style="color:#939393; font-size:1.5em; font-weight: bold;">{{< meta title >}}</span>  
 <span style="color:#777777; font-size:1.2em; font-weight: bold;">{{< meta subtitle >}}</span>  
 [<br>&nbsp;]{style="padding-bottom: 0.5rem;"}  
-[{{< fa solid home >}}](https://nates.place) nate stemen
+[{{< fa solid home >}} nate stemen](https://nates.place)
 
-[[{{< fa brands github >}} `unitaryfund/mitiq`](https://github.com/unitaryfund/mitiq)]{style="border-bottom: 0.5px solid #00ccff;"}
+[{{< fa brands github >}} `unitaryfund/mitiq`](https://github.com/unitaryfund/mitiq)
 
 [{{< meta date >}} @ [QuSoft](https://qusoft.org/) Seminar]{.dim-text style="text-align:left;'}
 :::
@@ -259,8 +233,6 @@ Use noisy operations to build ideal ones by selective cancellation and sampling.
 ::: {.column width="50%" .fragment}
 **[Classical]{.pink-text} Noisy Simulation Algorithms**
 
-
-<!-- <img src="assets/papers/noisy-rcs.png" style="border-radius: 8px; box-shadow: 0 0 10px rgba(255, 103, 255, 0.5), 0 0 20px rgba(255, 103, 255, 0.3), 0 0 30px rgba(255, 103, 255, 0.2)" /> -->
 ::: {.fragment}
 <img src="assets/papers/noisy-rcs.png" style="border-radius: 8px;" />
 <img src="assets/papers/classical-qcs.png" style="border-radius: 8px;" />
