@@ -1,0 +1,473 @@
+---
+lightbox: auto
+title: "Quantum Error Mitigation"
+subtitle: from theory to practice
+date: 2025-02-07
+date-modified: last-modified
+bibliography: references.bib
+appendix-cite-as: display
+# favicon: "./assets/favicon.svg"
+image: "assets/thumbnail.png"
+# footer: "{{< fa brands github >}} [saforem2.github.io/lattice23](https://saforem2.github.io/lattice23)"
+open-graph:
+  image: "./assets/thumbnail.png"
+  title: "MLMC: Machine Learning Monte Carlo"
+  description: "MLMC: Machine Learning Monte Carlo for Lattice Gauge Theory"
+author:
+  name: nate stemen
+  url: https://nates.place
+  email: nate@unitary.foundation
+  affiliation: Unitary Foundation
+  affiliation-url: https://unitary.foundation
+citation:
+   author: nate stemen
+   type: speech
+  #  genre: "Presentation at the 2023 International Symposium on Lattice Field Theory"
+  #  container-title: https://indico.fnal.gov/event/57249/contributions/271305/
+  #  title: "MLMC: Machine Learning Monte Carlo for Lattice Gauge Theory"
+  #  url: https://saforem2.github.io/lattice23
+  #  abstract: | 
+  #    We present a trainable framework for efficiently generating gauge
+  #    configurations, and discuss ongoing work in this direction. In particular, we
+  #    consider the problem of sampling configurations from a 4D 𝑆𝑈(3) lattice gauge
+  #    theory, and consider a generalized leapfrog integrator in the molecular
+  #    dynamics update that can be trained to improve sampling efficiency.
+callout-style: simple
+format:
+  revealjs:
+    output-file: "slides.html"
+    title-block-style: none
+    slide-number: c
+    title-slide-style: default
+    chalkboard:
+      buttons: false
+    auto-animate: true
+    reference-location: section
+    touch: true
+    pause: false
+    footnotes-hover: true
+    citations-hover: true
+    preview-links: true
+    controls-tutorial: true
+    controls: false
+    logo: https://raw.githubusercontent.com/unitaryfund/unitary.foundation/refs/heads/main/src/assets/svg/logo.svg
+    history: false
+    theme: [css/dark.scss]
+    callot-style: simple
+    css: [css/default.css, css/callouts.css]
+    self-contained: false
+    embed-resources: false
+    self-contained-math: false
+    center: true
+    highlight-style: "atom-one"
+    default-image-extension: svg
+    code-line-numbers: true
+    code-overflow: scroll
+    html-math-method: katex
+    fig-align: center
+    mermaid:
+      theme: neutral
+  # gfm:
+  #   output-file: "lattice23.md"
+---
+
+# {.title-slide .centeredslide}
+
+::: {style="background-color: rgba(22,22,22,0.75); border-radius: 10px; text-align:center; padding: 0px; padding-left: 1.5em; padding-right: 1.5em; max-width: min-content; min-width: max-content; margin-left: auto; margin-right: auto; padding-top: 0.2em; padding-bottom: 0.2em; line-height: 1.5em!important;"}
+<span style="color:#939393; font-size:1.5em; font-weight: bold;">{{< meta title >}}</span>  
+<span style="color:#777777; font-size:1.2em; font-weight: bold;">{{< meta subtitle >}}</span>  
+[<br>&nbsp;]{style="padding-bottom: 0.5rem;"}  
+[{{< fa solid home >}}](https://nates.place) nate stemen
+
+[[{{< fa brands github >}} `unitaryfund/mitiq`](https://github.com/unitaryfund/mitiq)]{style="border-bottom: 0.5px solid #00ccff;"}
+
+[{{< meta date >}} @ [QuSoft](https://qusoft.org/) Seminar]{.dim-text style="text-align:left;'}
+:::
+
+# Overview
+
+1. [`$ whoami`](#whoami-nate-stemen)
+1. [Quantum Error Mitigation](#quantum-error-mitigation-qem)
+    - [Comparison to Error Correction](#what-about-error-correction)
+2. QEM Techniques
+    - [Zero-Noise Extrapolation (ZNE)](#zero-noise-extrapolation)
+    - [Probabilistic Error Cancellation (PEC)](#probabilistic-error-cancellation)
+3. [QEM Feasibility](#qem-feasibility)
+4. [`import mitiq`](#import-mitiq)
+5. [Unitary Foundation](#unitary-foundation)
+
+# `$ whoami`: nate stemen {.centeredslide}
+
+::: {.columns}
+::: {.column width="70%" .fragment}
+
+**What I Do:**  
+
+::: {.incremental}
+
+- Member of Technical Staff @ [Unitary Foundation]{.yellow-text}
+- Researcher & engineer in **quantum error mitigation (QEM)**  
+- Maintainer of `mitiq`, an open-source QEM package  
+- Interested in quantum software, and near-term use of QCs
+
+:::
+
+:::
+::: {.column width="30%"}
+
+::: {.callout-warning title="Warning!" .fragment}
+- I am a practicioner.
+- I am [not]{.yellow-text} a theorist.
+:::
+
+:::
+:::
+
+::: {.fragment}
+**Why This Talk?**  
+
+- QEM is an attempt to bring quantum utility sooner
+
+:::
+
+# Quantum Error Mitigation (QEM) {.centeredslide}
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+::: {.callout-note title="Goal" style="text-align:left;!important" .fragment fragment-index=1}
+Estimate $\langle O \rangle = \mathrm{tr}(O \rho)$ given
+
+1. a quantum circuit $C$ preparing $\rho$
+2. a _noisy_ quantum device
+:::
+
+::: {.callout-tip title="Idea" .fragment fragment-index=3}
+Algorithm is allowed to modify input circuit $C$ and apply any postprocessing.
+:::
+
+:::
+
+::: {.column width="59%" .fragment fragment-index=2}
+<img src="assets/qem.png" width="600" />
+:::
+
+::::
+
+
+# What about Error Correction? {.centeredslide}
+
+::: {.columns}
+::: {.column width="40%"}
+**Quantum Error Mitigation**
+
+::: {.incremental .fade-in-then-semi-out}
+- Perform multiple different noisy computations
+- Collect results
+- Infer ideal expectation values
+:::
+
+::: {.fragment}
+**Quantum Error Correction**
+:::
+
+::: {.incremental .fade-in-then-semi-out}
+- Encode logical qubits into many physical qubits
+- Mid-circuit measurements extract syndromes
+- Use syndromes to correct errors
+:::
+
+:::
+::: {.column width="60%"}
+
+::: {.r-stack}
+![](assets/runtime_vs_complexity.svg){.fragment}
+
+![](assets/runtime_vs_complexity_highlight.svg){.fragment}
+:::
+:::
+:::
+
+# Zero-Noise Extrapolation {.centeredslide}
+
+::: {.columns}
+::: {.column}
+[$$\partial_t \rho = -i [H, \rho] + \textcolor{#F06292}{\lambda} \mathcal{L}(\rho)$$]{.fragment}
+
+::: {.incremental}
+1. Run circuit of interest at higher noise levels $C_{\textcolor{#F06292}{\lambda}}$
+2. Measure $\langle O \rangle_{\textcolor{#F06292}{\lambda}} = \mathrm{tr}(C_{\textcolor{#F06292}{\lambda}}|0\rangle\langle 0| O)$
+3. Extrapolate and return $\langle O\rangle_{\textcolor{#F06292}{0}}$.
+:::
+
+::: {.fragment}
+<img src="assets/extrapolation.png" width="350" />
+:::
+:::
+::: {.column}
+
+::: {.callout-tip title="Key Idea" .fragment fragment-index=1}
+Scale noise [up]{.green-text}, extrapolate back to zero-noise value.
+:::
+
+::: {.fragment}
+<img src="assets/scaling.png" width="500"/>
+:::
+:::
+:::
+
+# Probabilistic Error Cancellation {.centeredslide}
+
+::: {.columns}
+::: {.column}
+
+[$$\mathcal{U}_\text{ideal} = \sum_{i=1}^n a_i \mathcal{O}_i$$]{.fragment}
+
+::: {.incremental}
+1. Characterize implementable operations (basis gates)
+2. Construct representations of wanted gates
+3. Create circuits by sampling gates according to $|a_i|$
+4. Execute circuits
+5. Return
+  $$\langle O\rangle_\text{PEC} = \frac{\gamma}{M}\sum_{i=1}^M \sigma_i \langle O \rangle_i$$
+:::
+
+:::
+::: {.column}
+
+::: {.callout-tip title="Key Idea" .fragment fragment-index=1}
+Use noisy operations to build ideal ones by selective cancellation and sampling.
+:::
+
+::: {.fragment fragment-index=2}
+![](assets/pec.png)
+:::
+
+:::
+:::
+
+# QEM Feasibility {.centeredslide}
+
+<img src="assets/runtime_vs_complexity_highlight.svg" width="1000">
+
+
+# Feasibility Studies {.centeredslide}
+
+::::: {.columns}
+
+::: {.column width="50%" .fragment}
+**[Classical]{.pink-text} Noisy Simulation Algorithms**
+
+
+<!-- <img src="assets/papers/noisy-rcs.png" style="border-radius: 8px; box-shadow: 0 0 10px rgba(255, 103, 255, 0.5), 0 0 20px rgba(255, 103, 255, 0.3), 0 0 30px rgba(255, 103, 255, 0.2)" /> -->
+::: {.fragment}
+<img src="assets/papers/noisy-rcs.png" style="border-radius: 8px;" />
+<img src="assets/papers/classical-qcs.png" style="border-radius: 8px;" />
+<img src="assets/papers/pauli-prop.png" style="border-radius: 8px;" />
+:::
+
+:::
+::: {.column width="50%" .fragment}
+**QEM Sample Complexity**
+
+::: {.fragment}
+<img src="assets/papers/qem-sampling.png" style="border-radius: 8px;" />
+<img src="assets/papers/qem-sampling-low-bounds.png" style="border-radius: 8px;" />
+:::
+:::
+:::::
+
+::: {.callout-caution title="Not Covered" .fragment}
+Reducing the cost of QEC
+:::
+
+# Sampling Overhead {.centeredslide}
+
+::: {.incremental}
+- Suppose circuit contains $G$ gates with error rate $\varepsilon$
+- $\mathrm{Pr}[\text{no errors}] = (1 - \varepsilon)^G \approx \mathrm{e}^{-\varepsilon G}$
+- Worst case lower bounded by $\sim \mathrm{e}^{\varepsilon N L}$ [@takagi23]
+:::
+
+::: {.fragment}
+> Error mitigation is hopeless on circuits that scramble information rapidly. [@quek24]
+:::
+
+::: {.fragment}
+- When $\varepsilon NL = O(1)$, i.e. circuit size $O(\varepsilon^{-1})$ QEM is not prohibitive
+:::
+
+::: {.columns}
+::: {.column .fragment}
+| Average 2Q Error $\varepsilon$ | Feasible circuit size                         |
+| ------------------------------ |:---------------------------------------------:|
+| $10^{-3}$                      | $100 \times 100$                              |
+| $10^{-4}$                      | $300 \times 300$<br>$100 \times 1000$         |
+| $10^{-5}$                      | $1000 \times 1000$<br>$100 \times 10,000$     |
+[@zimboras25]
+:::
+::: {.column}
+::: {.callout-tip .fragment title="QEM $\bigcap$ QEC?"}
+[$\varepsilon^{-1} = NL$ can be achieved in _by_ QEC]{.fragment}
+:::
+:::
+:::
+
+
+# Classical Noisy Simulation {.centeredslide}
+
+::: {.columns}
+::: {.column width="48%"}
+**A polynomial-time classical algorithm for noisy quantum circuits** [@schuster24]
+
+::: {.fragment}
+> any quantum circuit for which [error mitigation is efficient]{.blue-text} on most input states, is also classically simulable on most input states
+:::
+
+::: {.incremental}
+- i.e. [QEM efficient]{.blue-text} in the number of qubits
+- When $\varepsilon = O(n^{-1})$ circuit can be difficult to simulate and efficiently mitigable
+:::
+
+:::
+::: {.column width="48%"}
+::: {.fragment}
+**Simulating quantum circuits with arbitrary local noise using Pauli Propagation** [@angrisani25]
+:::
+
+::: {.incremental}
+- Extending classical noisy simulation to more complex noise models
+- More complex qubit topologies
+:::
+:::
+:::
+
+
+# QEM Feasibility {.centeredslide}
+
+<img src="assets/runtime_vs_complexity_highlight.svg" width="1000">
+
+# `import mitiq` {.centeredslide}
+
+::: {.columns}
+::: {.column}
+::: {.callout-note title="Goal" .fragment}
+Create a tool that anyone programming quantum computers can _easily_ use.
+:::
+
+::: {.callout-caution title="requirements.txt" .fragment}
+::: {.incremental}
+- Easy to use
+- Minimal QEM knowledge
+- Works with QC access people already have
+- Works across SDKs
+:::
+:::
+:::
+::: {.column}
+![](assets/workflow.png){.fragment}
+
+![](assets/code.png){.fragment}
+:::
+:::
+
+::: {.callout-important title="Docs!" .fragment}
+[`mitiq.readthedocs.io`](https://mitiq.readthedocs.io/)
+:::
+
+# Recap {.centeredslide}
+
+::: {.columns}
+::: {.column width="33%" .fragment .fade-in-then-semi-out}
+**Feasibility**
+
+- No outright refutation
+- [Restrictions]{.orange-text} on QEM-feasible zone
+
+<img src="assets/runtime_vs_complexity_highlight.svg" width="300">
+:::
+
+::: {.column width="33%" .fragment .fade-in-then-semi-out}
+
+**Open Questions**
+
+- Benchmarking QEM techniques
+- Average-case analysis for QEM sampling cost
+- Circuits for which QEM [outperforms]{.green-text} classical methods
+
+:::
+
+::: {.column width="33%" .fragment .fade-in-then-semi-out}
+**In practice**
+
+- Using error mitigation in practice is possible with `mitiq`
+- Tuning technique-parameters are often a [challenge]{.red-text}
+
+<img src="assets/mitiq-examples.png" width="300">
+:::
+:::
+
+
+# [Unitary Foundation]{.yellow-text} {.centeredslide}
+
+:::: {.columns .fragment}
+::: {.column width="33%"}
+**Software**
+
+- `mitiq`
+- [metriq.info](https://metriq.info)
+- `ucc` (*coming soon*)
+
+:::
+::: {.column width="33%"}
+**Research**
+
+- QEM
+- Benchmarking
+- Compilation
+
+:::
+::::
+
+[**Ecosystem**]{.fragment}
+
+::::: {.columns}
+:::: {.column}
+::: {.incremental}
+- Microgrant program
+  - [$4k]{.green-text}; no strings attached
+  - aimed at explorers in quantum
+  - open-source, but also community projects
+  - 3-6 month duration
+:::
+
+::: {.notes}
+John van de Wetering together with Aleks Kissinger was awarded one of the first grants given out my UF in 2018.
+:::
+
+::: {.callout-tip .fragment}
+Apply @ [`unitary.foundation/grants`](https://unitary.foundation/grants)
+:::
+
+::::
+
+:::: {.column}
+::: {.incremental}
+- Discord : [`discord.unitary.foundation`](http://discord.unitary.foundation)
+- unitaryHACK : [`unitaryhack.dev`](https://unitaryhack.dev)
+- Quantum Open-Source Software Survey : [`unitaryfund.github.io/survey-2024`](https://unitaryfund.github.io/survey-2024/)
+- unitaryCON
+:::
+::::
+
+:::::
+
+
+# Thank you!
+
+::: {.callout-tip title="Contact"}
+📧 [`nate@unitary.foundation`](mailto:nate@unitary.foundation)
+:::
+
+# References
