@@ -2,14 +2,14 @@
 lightbox: auto
 title: "Quantum Error Mitigation"
 subtitle: from theory to practice
-date: 2025-02-07
+date: 5 Aug 2025
 date-modified: last-modified
 bibliography: references.bib
 appendix-cite-as: display
 include-in-header:
   - text: |
       <link rel="shortcut icon" href="assets/mitiq.ico" />
-footer: "{{< fa brands github >}} [natestemen.github.io/qem-qusoft](https://natestemen.github.io/qem-qusoft/)"
+# footer: "{{< fa brands github >}} [natestemen.github.io/qem-qusoft](https://natestemen.github.io/qem-qusoft/)"
 open-graph:
   title: "Quantum Error Mitigation: from theory to practice"
   description: "Presentation on Quantum Error Mitigation given at the QuSoft seminar."
@@ -17,7 +17,7 @@ open-graph:
 author:
   name: nate stemen
   url: https://nates.place
-  email: nate@unitary.foundation
+  email: nate@stemen.email
   affiliation: Unitary Foundation
   affiliation-url: https://unitary.foundation
 citation:
@@ -53,9 +53,9 @@ format:
 [<br>&nbsp;]{style="padding-bottom: 0.5rem;"}  
 [{{< fa solid home >}} nate stemen](https://nates.place)
 
-[{{< fa brands github >}} `unitaryfund/mitiq`](https://github.com/unitaryfund/mitiq)
+[{{< fa brands github >}} `unitaryfoundation/mitiq`](https://github.com/unitaryfoundation/mitiq)
 
-[{{< meta date >}} @ [QuSoft](https://qusoft.org/) Seminar]{.dim-text style="text-align:left;'}
+[{{< meta date >}} @ [Quantum@UW](https://quantumreu.cs.washington.edu/) Seminar]{.dim-text style="text-align:left;'}
 :::
 
 # Overview
@@ -69,6 +69,7 @@ format:
 3. [QEM Feasibility](#qem-feasibility)
 4. [`import mitiq`](#import-mitiq)
 5. [Unitary Foundation](#unitary-foundation)
+6. [Careers in Quantum](#careers)
 
 # `$ whoami`: nate stemen {.centeredslide}
 
@@ -80,7 +81,7 @@ format:
 ::: {.incremental}
 
 - Member of Technical Staff @ [Unitary Foundation]{.yellow-text}
-- Researcher & engineer in **quantum error mitigation (QEM)**  
+- Researcher & engineer in **error mitigation (QEM)**  
 - Maintainer of `mitiq`, an open-source QEM package  
 - Interested in quantum software, and near-term use of QCs
 
@@ -89,9 +90,15 @@ format:
 :::
 ::: {.column width="30%"}
 
-::: {.callout-warning title="Warning!" .fragment}
-- I am a practicioner.
-- I am [not]{.yellow-text} a theorist.
+::: {.callout-note title="Background" .fragment}
+- [2013-2017]<br>
+  Math + Physics @ [NYU]{.purple-text}
+- [2017-2021]<br>
+  Developer @ [Overleaf]{.green-text}
+- [2020-2022]<br>
+  Quantum @ [U Waterloo]{.orange-text}
+- [2022-]<br>
+  [UF]{.yellow-text}
 :::
 
 :::
@@ -389,7 +396,7 @@ Create a tool that anyone programming quantum computers can _easily_ use.
 
 - `mitiq`
 - [metriq.info](https://metriq.info)
-- `ucc` (*coming soon*)
+- `ucc`
 
 :::
 ::: {.column width="33%"}
@@ -414,10 +421,6 @@ Create a tool that anyone programming quantum computers can _easily_ use.
   - 3-6 month duration
 :::
 
-::: {.notes}
-John van de Wetering together with Aleks Kissinger was awarded one of the first grants given out my UF in 2018.
-:::
-
 ::: {.callout-tip .fragment}
 Apply @ [`unitary.foundation/grants`](https://unitary.foundation/grants)
 :::
@@ -428,18 +431,46 @@ Apply @ [`unitary.foundation/grants`](https://unitary.foundation/grants)
 ::: {.incremental}
 - Discord : [`discord.unitary.foundation`](http://discord.unitary.foundation)
 - unitaryHACK : [`unitaryhack.dev`](https://unitaryhack.dev)
-- Quantum Open-Source Software Survey : [`unitaryfund.github.io/survey-2024`](https://unitaryfund.github.io/survey-2024/)
-- unitaryCON
+- Quantum Open-Source Software Survey : [`unitaryfoundation.github.io/survey-2024`](https://unitaryfoundation.github.io/survey-2024/)
+- unitaryCON @ IEEE QCE 2025
 :::
 ::::
 
 :::::
 
 
+# Careers
+
+::: {.columns}
+::: {.column width=70%}
+<img src="assets/stack.jpg" width="800">
+:::
+
+::: {.column width=30%}
+
+
+Languages
+
+- python/julia/C++/rust
+
+Tools
+
+- `git`/GitHub
+- numerics packages (numpy/scipy)
+- quantum SDK (qiskit, cirq, pennylane, ...) 
+
+Other
+
+- software eng. skills: testing, documentation, API design, ...
+- technical writing
+:::
+:::
+
+
 # Thank you!
 
 ::: {.callout-tip title="Contact"}
-📧 [`nate@unitary.foundation`](mailto:nate@unitary.foundation)
+📧 [`nate@stemen.email`](mailto:nate@stemen.email)
 :::
 
 # References
