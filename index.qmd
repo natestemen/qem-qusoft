@@ -69,7 +69,6 @@ format:
 3. [QEM Feasibility](#qem-feasibility)
 4. [`import mitiq`](#import-mitiq)
 5. [Unitary Foundation](#unitary-foundation)
-6. [Careers in Quantum](#careers)
 
 # `$ whoami`: nate stemen {.centeredslide}
 
