@@ -15,8 +15,8 @@
   <meta name="generator" content="quarto-1.6.40">
 
   <meta name="author" content="nate stemen">
-  <meta name="dcterms.date" content="2025-08-05">
-  <title>Working with Noisy Quantum Hardware</title>
+  <meta name="dcterms.date" content="2025-08-06">
+  <title>An overview of Quantum Error Mitigation</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -166,15 +166,15 @@
     }
   </style>
   <link rel="shortcut icon" href="assets/mitiq.ico">
-<meta property="og:title" content="Working with Noisy Quantum Hardware: from theory to practice">
-<meta property="og:description" content="Presentation on Quantum Error Mitigation given at the QuSoft seminar.">
+<meta property="og:title" content="An overview of Quantum Error Mitigation: from theory to practice">
+<meta property="og:description" content="Presentation on Quantum Error Mitigation given at BMW seminar.">
 </head>
 <body class="quarto-dark">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Working with Noisy Quantum Hardware</h1>
+  <h1 class="title">An overview of Quantum Error Mitigation</h1>
   <p class="subtitle">from theory to practice</p>
 
 <div class="quarto-title-authors">
@@ -193,17 +193,17 @@
     </div>
 </div>
 
-  <p class="date">2025-08-05</p>
+  <p class="date">2025-08-06</p>
 </section>
 <section id="section" class="title-slide slide level1 centeredslide center">
 <h1></h1>
 <div style="background-color: rgba(22,22,22,0.75); border-radius: 10px; text-align:center; padding: 0px; padding-left: 1.5em; padding-right: 1.5em; max-width: min-content; min-width: max-content; margin-left: auto; margin-right: auto; padding-top: 0.2em; padding-bottom: 0.2em; line-height: 1.5em!important;">
-<p><span style="color:#939393; font-size:1.5em; font-weight: bold;">Working with Noisy Quantum Hardware</span><br>
+<p><span style="color:#939393; font-size:1.5em; font-weight: bold;">An overview of Quantum Error Mitigation</span><br>
 <span style="color:#777777; font-size:1.2em; font-weight: bold;">from theory to practice</span><br>
 <span style="padding-bottom: 0.5rem;"><br>&nbsp;</span><br>
 <a href="https://nates.place"><i class="fa-solid fa-home" aria-label="home"></i> nate stemen</a></p>
 <p><a href="https://github.com/unitaryfoundation/mitiq"><i class="fa-brands fa-github" aria-label="github"></i> <code>unitaryfoundation/mitiq</code></a></p>
-<p><span class="dim-text" style="&quot;text-align:left;'">2025-08-05 @ <a href="https://quantumreu.cs.washington.edu/">Quantum@UW</a> Seminar</span></p>
+<p><span class="dim-text" style="&quot;text-align:left;'">2025-08-06 @ BMW Seminar</span></p>
 </div>
 </section>
 
@@ -229,9 +229,9 @@
 
 <section id="whoami-nate-stemen" class="title-slide slide level1 centeredslide center">
 <h1><code>$ whoami</code>: nate stemen</h1>
-<div class="columns">
-<div class="column fragment" style="width:70%;">
+<div class="fragment">
 <p><strong>What I Do:</strong></p>
+</div>
 <div>
 <ul>
 <li class="fragment">Member of Technical Staff @ <span class="yellow-text">Unitary Foundation</span></li>
@@ -242,28 +242,6 @@
 <li class="fragment">Interested in quantum software, and near-term use of QCs</li>
 </ul>
 </div>
-</div><div class="column" style="width:30%;">
-<div class="fragment" title="Background">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Background</strong></p>
-</div>
-<div class="callout-content">
-<ul>
-<li>[2013-2017]<br> Math + Physics @ <span class="purple-text">NYU</span></li>
-<li>[2017-2021]<br> Developer @ <span class="green-text">Overleaf</span></li>
-<li>[2020-2022]<br> Quantum @ <span class="orange-text">U Waterloo</span></li>
-<li>[2022-]<br> <span class="yellow-text">UF</span></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div></div>
 <div class="fragment">
 <p><strong>Why This Talk?</strong></p>
 <ul>
@@ -521,35 +499,6 @@
 </div></div>
 </section>
 
-<section id="classical-noisy-simulation" class="title-slide slide level1 centeredslide center">
-<h1>Classical Noisy Simulation</h1>
-<div class="columns">
-<div class="column" style="width:48%;">
-<p><strong>A polynomial-time classical algorithm for noisy quantum circuits</strong> <span class="citation" data-cites="schuster24">(<a href="#/references" role="doc-biblioref" onclick="">Schuster et al. 2024</a>)</span></p>
-<div class="fragment">
-<blockquote>
-<p>any quantum circuit for which <span class="blue-text">error mitigation is efficient</span> on most input states, is also classically simulable on most input states</p>
-</blockquote>
-</div>
-<div>
-<ul>
-<li class="fragment">i.e.&nbsp;<span class="blue-text">QEM efficient</span> in the number of qubits</li>
-<li class="fragment">When <span class="math inline">\varepsilon = O(n^{-1})</span> circuit can be difficult to simulate and efficiently mitigable</li>
-</ul>
-</div>
-</div><div class="column" style="width:48%;">
-<div class="fragment">
-<p><strong>Simulating quantum circuits with arbitrary local noise using Pauli Propagation</strong> <span class="citation" data-cites="angrisani25">(<a href="#/references" role="doc-biblioref" onclick="">Angrisani et al. 2025</a>)</span></p>
-</div>
-<div>
-<ul>
-<li class="fragment">Extending classical noisy simulation to more complex noise models</li>
-<li class="fragment">More complex qubit topologies</li>
-</ul>
-</div>
-</div></div>
-</section>
-
 <section id="qem-feasibility-1" class="title-slide slide level1 centeredslide center">
 <h1>QEM Feasibility</h1>
 
@@ -623,7 +572,8 @@
 <div class="column fragment fade-in-then-semi-out" style="width:33%;">
 <p><strong>Feasibility</strong></p>
 <ul>
-<li>No outright refutation</li>
+<li>No circuits proven to be feasible</li>
+<li>Utility/advantage papers</li>
 <li><span class="orange-text">Restrictions</span> on QEM-feasible zone</li>
 </ul>
 <p><img src="assets/runtime_vs_complexity_highlight.svg" width="300"></p>
@@ -632,7 +582,6 @@
 <ul>
 <li>Benchmarking QEM techniques</li>
 <li>Average-case analysis for QEM sampling cost</li>
-<li>Circuits for which QEM <span class="green-text">outperforms</span> classical methods</li>
 </ul>
 </div><div class="column fragment fade-in-then-semi-out" style="width:33%;">
 <p><strong>In practice</strong></p>
@@ -703,30 +652,6 @@
 </div></div>
 </section>
 
-<section id="careers" class="title-slide slide level1 center">
-<h1>Careers</h1>
-<div class="columns">
-<div class="column" style="width:70%;">
-<p><img src="assets/stack.jpg" width="800"></p>
-</div><div class="column" style="width:30%;">
-<p>Languages</p>
-<ul>
-<li>python/julia/C++/rust</li>
-</ul>
-<p>Tools</p>
-<ul>
-<li><code>git</code>/GitHub</li>
-<li>numerics packages (numpy/scipy)</li>
-<li>quantum SDK (qiskit, cirq, pennylane, …)</li>
-</ul>
-<p>Other</p>
-<ul>
-<li>software eng. skills: testing, documentation, API design, …</li>
-<li>technical writing</li>
-</ul>
-</div></div>
-</section>
-
 <section id="thank-you" class="title-slide slide level1 center">
 <h1>Thank you!</h1>
 <div title="Contact">
@@ -751,14 +676,8 @@
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-angrisani25" class="csl-entry" role="listitem">
-Angrisani, Armando, Antonio A. Mele, Manuel S. Rudolph, M. Cerezo, and Zoë Holmes. 2025. <span>“<span class="nocase">Simulating quantum circuits with arbitrary local noise using Pauli Propagation</span>.”</span> <em>arXiv e-Prints</em>, January, arXiv:2501.13101. <a href="https://doi.org/10.48550/arXiv.2501.13101">https://doi.org/10.48550/arXiv.2501.13101</a>.
-</div>
 <div id="ref-quek24" class="csl-entry" role="listitem">
 Quek, Yihui, Daniel Stilck França, Sumeet Khatri, Johannes Jakob Meyer, and Jens Eisert. 2024. <span>“Exponentially Tighter Bounds on Limitations of Quantum Error Mitigation.”</span> <em>Nature Physics</em> 20 (10): 1648–58. <a href="https://doi.org/10.1038/s41567-024-02536-7">https://doi.org/10.1038/s41567-024-02536-7</a>.
-</div>
-<div id="ref-schuster24" class="csl-entry" role="listitem">
-Schuster, Thomas, Chao Yin, Xun Gao, and Norman Y. Yao. 2024. <span>“<span class="nocase">A polynomial-time classical algorithm for noisy quantum circuits</span>.”</span> <em>arXiv e-Prints</em>, July, arXiv:2407.12768. <a href="https://doi.org/10.48550/arXiv.2407.12768">https://doi.org/10.48550/arXiv.2407.12768</a>.
 </div>
 <div id="ref-takagi23" class="csl-entry" role="listitem">
 Takagi, Ryuji, Hiroyasu Tajima, and Mile Gu. 2023. <span>“Universal Sampling Lower Bounds for Quantum Error Mitigation.”</span> <em>Phys. Rev. Lett.</em> 131 (November): 210602. <a href="https://doi.org/10.1103/PhysRevLett.131.210602">https://doi.org/10.1103/PhysRevLett.131.210602</a>.

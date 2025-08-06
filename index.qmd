@@ -1,8 +1,8 @@
 ---
 lightbox: auto
-title: "Working with Noisy Quantum Hardware"
+title: "An overview of Quantum Error Mitigation"
 subtitle: from theory to practice
-date: 5 Aug 2025
+date: 6 Aug 2025
 date-modified: last-modified
 bibliography: references.bib
 appendix-cite-as: display
@@ -11,8 +11,8 @@ include-in-header:
       <link rel="shortcut icon" href="assets/mitiq.ico" />
 # footer: "{{< fa brands github >}} [natestemen.github.io/qem-qusoft](https://natestemen.github.io/qem-qusoft/)"
 open-graph:
-  title: "Working with Noisy Quantum Hardware: from theory to practice"
-  description: "Presentation on Quantum Error Mitigation given at the QuSoft seminar."
+  title: "An overview of Quantum Error Mitigation: from theory to practice"
+  description: "Presentation on Quantum Error Mitigation given at BMW seminar."
   type: "website"
 author:
   name: nate stemen
@@ -22,10 +22,10 @@ author:
   affiliation-url: https://unitary.foundation
 citation:
   author: nate stemen
-  title: "Working with Noisy Quantum Hardware: from theory to practice"
+  title: "An overview of Quantum Error Mitigation: from theory to practice"
   type: speech
   abstract: |
-    Current quantum computers have enough qubits to surpass what we can simulate on classical machines. So why aren’t we seeing quantum advantage papers every week? While devices are getting larger, they're still fundamentally limited by noise. In this talk, I’ll explain what makes quantum noise especially tricky to deal with, and share some of the methods we use to reduce its impact. I’ll cover both the theory behind Quantum Error Mitigation (QEM) methods and how they’re applied in practice, particularly through software.
+    Quantum error mitigation (QEM) provides a set of techniques to reduce the impact of noise in near-term quantum computers without the large qubit overhead of quantum error correction. In this talk, I will introduce the core ideas behind QEM and detail the differences from error correction. I will discuss theoretical results that constrain the effective use of QEM techniques in theory, and showcase how these techniques have been used in practice. From there, we will explore the future of QEM as hardware improves and error-corrected devices come online.
 callout-style: simple
 format:
   revealjs:
@@ -55,7 +55,7 @@ format:
 
 [{{< fa brands github >}} `unitaryfoundation/mitiq`](https://github.com/unitaryfoundation/mitiq)
 
-[{{< meta date >}} @ [Quantum@UW](https://quantumreu.cs.washington.edu/) Seminar]{.dim-text style="text-align:left;'}
+[{{< meta date >}} @ BMW Seminar]{.dim-text style="text-align:left;'}
 :::
 
 # Overview
@@ -73,10 +73,11 @@ format:
 
 # `$ whoami`: nate stemen {.centeredslide}
 
-::: {.columns}
-::: {.column width="70%" .fragment}
+::: {.fragment}
 
-**What I Do:**  
+**What I Do:**
+
+:::
 
 ::: {.incremental}
 
@@ -87,22 +88,6 @@ format:
 
 :::
 
-:::
-::: {.column width="30%"}
-
-::: {.callout-note title="Background" .fragment}
-- [2013-2017]<br>
-  Math + Physics @ [NYU]{.purple-text}
-- [2017-2021]<br>
-  Developer @ [Overleaf]{.green-text}
-- [2020-2022]<br>
-  Quantum @ [U Waterloo]{.orange-text}
-- [2022-]<br>
-  [UF]{.yellow-text}
-:::
-
-:::
-:::
 
 ::: {.fragment}
 **Why This Talk?**  
@@ -294,35 +279,6 @@ Reducing the cost of QEC
 :::
 
 
-# Classical Noisy Simulation {.centeredslide}
-
-::: {.columns}
-::: {.column width="48%"}
-**A polynomial-time classical algorithm for noisy quantum circuits** [@schuster24]
-
-::: {.fragment}
-> any quantum circuit for which [error mitigation is efficient]{.blue-text} on most input states, is also classically simulable on most input states
-:::
-
-::: {.incremental}
-- i.e. [QEM efficient]{.blue-text} in the number of qubits
-- When $\varepsilon = O(n^{-1})$ circuit can be difficult to simulate and efficiently mitigable
-:::
-
-:::
-::: {.column width="48%"}
-::: {.fragment}
-**Simulating quantum circuits with arbitrary local noise using Pauli Propagation** [@angrisani25]
-:::
-
-::: {.incremental}
-- Extending classical noisy simulation to more complex noise models
-- More complex qubit topologies
-:::
-:::
-:::
-
-
 # QEM Feasibility {.centeredslide}
 
 <img src="assets/runtime_vs_complexity_highlight.svg" width="1000">
@@ -361,7 +317,8 @@ Create a tool that anyone programming quantum computers can _easily_ use.
 ::: {.column width="33%" .fragment .fade-in-then-semi-out}
 **Feasibility**
 
-- No outright refutation
+- No circuits proven to be feasible
+- Utility/advantage papers
 - [Restrictions]{.orange-text} on QEM-feasible zone
 
 <img src="assets/runtime_vs_complexity_highlight.svg" width="300">
@@ -373,7 +330,6 @@ Create a tool that anyone programming quantum computers can _easily_ use.
 
 - Benchmarking QEM techniques
 - Average-case analysis for QEM sampling cost
-- Circuits for which QEM [outperforms]{.green-text} classical methods
 
 :::
 
@@ -437,34 +393,6 @@ Apply @ [`unitary.foundation/grants`](https://unitary.foundation/grants)
 ::::
 
 :::::
-
-
-# Careers
-
-::: {.columns}
-::: {.column width=70%}
-<img src="assets/stack.jpg" width="800">
-:::
-
-::: {.column width=30%}
-
-
-Languages
-
-- python/julia/C++/rust
-
-Tools
-
-- `git`/GitHub
-- numerics packages (numpy/scipy)
-- quantum SDK (qiskit, cirq, pennylane, ...) 
-
-Other
-
-- software eng. skills: testing, documentation, API design, ...
-- technical writing
-:::
-:::
 
 
 # Thank you!
